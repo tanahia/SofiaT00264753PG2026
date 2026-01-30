@@ -891,6 +891,7 @@ MonoBehaviour:
   boostSpeedLimit: 60
   firstSpeedLimit: 40
   resetMultiplier: 20
+  wheels: []
 --- !u!4 &1732152576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 846472931399853157, guid: 2ae9caeb76fe54eba8543020027508ce, type: 3}

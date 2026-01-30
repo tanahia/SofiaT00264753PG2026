@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,10 +19,14 @@ public class MotorcycleMovement : MonoBehaviour
     [SerializeField] float boostSpeedLimit;
     [SerializeField] float firstSpeedLimit;
     [SerializeField] float resetMultiplier;
+    [SerializeField] GameObject[] wheels;
 
     float startHandlePosition;
+    float startFrontWheelY;
+    float startFrontWheelZ;
     float currentY;
     float currentZ;
+    float currentX;
 
 
     void Start()
@@ -62,6 +67,7 @@ public class MotorcycleMovement : MonoBehaviour
         {
             Vector3 brakeDirection = -_rb.linearVelocity.normalized;
             _rb.AddForce(brakeDirection * brakeAccelaration, ForceMode.Acceleration);
+
         }
     }
 
@@ -83,6 +89,7 @@ public class MotorcycleMovement : MonoBehaviour
         else {
             steeringMotorcycle.localRotation = Quaternion.Euler(0, 0, currentZ);
             steeringHandle.localRotation = Quaternion.Euler(startHandlePosition, currentY, 0);
+
           //  print(_input.x);
         }
        
@@ -91,7 +98,13 @@ public class MotorcycleMovement : MonoBehaviour
     void Accelarate(float accelaration)
     {
         _rb.AddForce(_rb.transform.forward * accelaration);
-      //  print(_rb.linearVelocity.magnitude);
+        currentX += accelaration * Time.fixedDeltaTime;
+        foreach (var wheel in wheels)
+        {
+            wheel.transform.localRotation = Quaternion.Euler(currentX, 0, 0);
+        }
+
+        //  print(_rb.linearVelocity.magnitude);
     }
     void ResetRotation()
     {
