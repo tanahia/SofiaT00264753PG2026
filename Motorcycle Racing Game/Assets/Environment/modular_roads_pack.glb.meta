@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7f261f06dc73913439c5b50027dcdb63
+guid: e3e85767e1acb664298603913a609e1f
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -46,28 +46,14 @@ ScriptedImporter:
 
 '
   optimizeGameObjects: 0
-  materials:
-  - {instanceID: 0}
-  - {instanceID: 0}
-  textures:
-  - {instanceID: 0}
-  - {instanceID: 0}
+  materials: []
+  textures: []
   hasSceneData: 1
   hasAnimationData: 0
-  hasMaterialData: 1
-  hasTextureData: 1
+  hasMaterialData: 0
+  hasTextureData: 0
   animations: []
-  _extensions:
-  - name: KHR_materials_specular
-    supported: 1
-    used: 1
-    required: 0
-  _textures:
-  - texture: {instanceID: 0}
-    shouldBeLinear: 0
-    shouldBeNormalMap: 0
-  - texture: {instanceID: 0}
-    shouldBeLinear: 0
-    shouldBeNormalMap: 0
+  _extensions: []
+  _textures: []
   _mainAssetIdentifier: scenes/Scene
   _importPlugins: []
