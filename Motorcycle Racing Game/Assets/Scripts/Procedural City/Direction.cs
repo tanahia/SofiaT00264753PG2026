@@ -1,8 +1,14 @@
+﻿
 using UnityEngine;
 
-public enum Direction {
-    Up,
-    Down,
-    Left,
-    Right,
+namespace SVS
+{
+	public enum Direction
+	{
+		Up,
+		Down,
+		Left,
+		Right
+	}
 }
+
