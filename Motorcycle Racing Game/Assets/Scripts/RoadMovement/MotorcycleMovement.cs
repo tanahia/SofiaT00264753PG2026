@@ -11,7 +11,7 @@ public class MotorcycleMovement : MonoBehaviour
     [SerializeField] Transform steeringHandle;
     [SerializeField] Transform steeringMotorcycle;
 
-    [SerializeField] float accelaration;
+    [SerializeField] float accelaration=50f;
     [SerializeField] float brakeAccelaration;
     [SerializeField] float steeringAccelearation;
     [SerializeField] float angleMultiplier;
@@ -116,5 +116,10 @@ public class MotorcycleMovement : MonoBehaviour
 
         currentY = Mathf.Lerp(currentY, 0f, resetMultiplier * Time.fixedDeltaTime);
         currentZ = Mathf.Lerp(currentZ, 0f, resetMultiplier * Time.fixedDeltaTime);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+      _rb.linearVelocity = Vector3.zero;
+        print("stop");
     }
 }
