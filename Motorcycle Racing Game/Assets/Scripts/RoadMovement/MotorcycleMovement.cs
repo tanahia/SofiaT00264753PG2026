@@ -28,6 +28,8 @@ public class MotorcycleMovement : MonoBehaviour
     float currentZ;
     float currentX;
 
+    bool choiceMaking = false;
+
 
     void Start()
     {
@@ -53,12 +55,21 @@ public class MotorcycleMovement : MonoBehaviour
         }
         else
         {
-            if (_rb.linearVelocity.magnitude <= currentSpeedLimit)
-                Accelarate(currentAcceleration);
-            else
-                _rb.linearVelocity = _rb.linearVelocity.normalized * currentSpeedLimit;
+            if (choiceMaking == false)
+            {
+                if (_rb.linearVelocity.magnitude <= currentSpeedLimit)
+                    Accelarate(currentAcceleration);
+                else
+                    _rb.linearVelocity = _rb.linearVelocity.normalized * currentSpeedLimit;
+                Steer();
+            }
+            else if (choiceMaking == true)
+            {
+                _rb.linearVelocity = Vector3.zero;
+                print("stop");
+            }
         }
-        Steer();
+        
     }
 
     private void Brake()
@@ -117,9 +128,8 @@ public class MotorcycleMovement : MonoBehaviour
         currentY = Mathf.Lerp(currentY, 0f, resetMultiplier * Time.fixedDeltaTime);
         currentZ = Mathf.Lerp(currentZ, 0f, resetMultiplier * Time.fixedDeltaTime);
     }
-    private void OnTriggerEnter(Collider other)
+   public void OnTriggerEnter(Collider other)
     {
-      _rb.linearVelocity = Vector3.zero;
-        print("stop");
+        choiceMaking = true;
     }
 }
