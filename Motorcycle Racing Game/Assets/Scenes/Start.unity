@@ -522,7 +522,7 @@ Transform:
   m_GameObject: {fileID: 837474395}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 125, y: -47.7, z: -0}
+  m_LocalPosition: {x: 125, y: -0.1, z: -0}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -663,6 +663,85 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!1 &1460626722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1460626725}
+  - component: {fileID: 1460626724}
+  - component: {fileID: 1460626723}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1460626723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460626722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &1460626724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460626722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1460626725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1460626722}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1531435168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6200087229809236343, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
@@ -925,17 +1004,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SVS.StructureHelper
   houseTypes:
   - prefabs:
-    - {fileID: 601627249372026745, guid: dba8e43e671d90d4a88a65a26f484f21, type: 3}
-    - {fileID: 6510032672486570964, guid: 23dd5fd9e518d264abb70731252a7e2a, type: 3}
-    sizeRequired: 1
-    quantity: 5
-    quantityAlreadyPlaced: 0
-  - prefabs:
-    - {fileID: 7996734182818786210, guid: 963aec0715cbb224a92652d99bc841eb, type: 3}
-    - {fileID: 1267752594550630789, guid: c008f7d315b9ab8419aebf1e17d5e1e5, type: 3}
-    sizeRequired: 2
+    - {fileID: 8771091787928289351, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+    - {fileID: 8771091787928289351, guid: 1bb4e7f95f006884b92fe2502f8e37cb, type: 3}
+    - {fileID: 8771091787928289351, guid: 78b6223196a32cb4abe4e73878728014, type: 3}
+    - {fileID: 8771091787928289351, guid: 15bfede2c10567d488d8831ea4400ebb, type: 3}
     quantity: -1
     quantityAlreadyPlaced: 0
+  cellSize: 6
 --- !u!1 &1975332652
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,6 +1060,7 @@ MonoBehaviour:
   road3way: {fileID: 105754214762680060, guid: 3e517adec908c37479003aa80bd4f86a, type: 3}
   road4way: {fileID: 7465385272746658964, guid: dff9201ed307fbd44b7227107a4b51f4, type: 3}
   roadEnd: {fileID: 1353558074329916999, guid: 1bbfa638188b23a459ffb6189ef657b8, type: 3}
+  cellSize: 6
 --- !u!1001 &3102446017204167300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -996,6 +1072,18 @@ PrefabInstance:
     - target: {fileID: 8449208569136439207, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_Name
       value: Motorcycle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1072,3 +1160,4 @@ SceneRoots:
   - {fileID: 1975332654}
   - {fileID: 1940474804}
   - {fileID: 3102446017204167300}
+  - {fileID: 1460626725}

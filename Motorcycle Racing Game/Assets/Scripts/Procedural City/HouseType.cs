@@ -4,8 +4,8 @@ using UnityEngine;
 [Serializable]
 public class HouseType
 {
-    [SerializeField] GameObject[] prefabs;
-    public int sizeRequired;
+    [SerializeField] private GameObject[] prefabs;
+    //public int sizeRequired;
     public int quantity;
     public int quantityAlreadyPlaced;
 

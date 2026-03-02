@@ -8,7 +8,8 @@ namespace SVS
 	public class RoadHelper : MonoBehaviour
 	{
 		public GameObject roadStraight, roadCorner, road3way, road4way, roadEnd;
-		Dictionary<Vector3Int, GameObject> roadDictionary = new Dictionary<Vector3Int, GameObject>();
+        public float cellSize = 3f;
+        Dictionary<Vector3Int, GameObject> roadDictionary = new Dictionary<Vector3Int, GameObject>();
 		HashSet<Vector3Int> fixRoadCandidates = new HashSet<Vector3Int>();
 
 		public List<Vector3Int> GetRoadPositions()
@@ -30,20 +31,31 @@ namespace SVS
 				{
 					continue;
 				}
-				var road = Instantiate(roadStraight, position, rotation, transform);
-				roadDictionary.Add(position, road);
+                Vector3 worldPosition = GridToWorld(position);
+                var road = Instantiate(roadStraight, worldPosition, rotation, transform);
+                roadDictionary.Add(position, road);
 				if(i==0 || i == length - 1)
 				{
 					fixRoadCandidates.Add(position);
 				}
 			}
 		}
-
-		public void FixRoad()
+		private Vector3 GridToWorld(Vector3Int gridPosition)
 		{
+			return new Vector3(
+				gridPosition.x * cellSize,
+				gridPosition.y,
+				gridPosition.z * cellSize
+			);
+		}
+
+        public void FixRoad()
+		{
+
 			foreach (var position in fixRoadCandidates)
 			{
-				List<Direction> neighbourDirections = PlacementHelper.FindNeighbour(position, roadDictionary.Keys);
+                Vector3 worldPosition = GridToWorld(position);
+                List<Direction> neighbourDirections = PlacementHelper.FindNeighbour(position, roadDictionary.Keys);
 
 				Quaternion rotation = Quaternion.identity;
 
@@ -61,7 +73,7 @@ namespace SVS
 					{
 						rotation = Quaternion.Euler(0, -180, 0);
 					}
-					roadDictionary[position] = Instantiate(roadEnd, position, rotation, transform);
+					roadDictionary[position] = Instantiate(roadEnd, worldPosition, rotation, transform);
 				}
 				else if (neighbourDirections.Count == 2)
 				{
@@ -85,7 +97,7 @@ namespace SVS
 					{
 						rotation = Quaternion.Euler(0, 180, 0);
 					}
-					roadDictionary[position] = Instantiate(roadCorner, position, rotation, transform);
+					roadDictionary[position] = Instantiate(roadCorner, worldPosition, rotation, transform);
 				}
 				else if(neighbourDirections.Count == 3)
 				{
@@ -109,12 +121,12 @@ namespace SVS
 					{
 						rotation = Quaternion.Euler(0, 180, 0);
 					}
-					roadDictionary[position] = Instantiate(road3way, position, rotation, transform);
+					roadDictionary[position] = Instantiate(road3way, worldPosition, rotation, transform);
 				}
 				else
 				{
 					Destroy(roadDictionary[position]);
-					roadDictionary[position] = Instantiate(road4way, position, rotation, transform);
+					roadDictionary[position] = Instantiate(road4way, worldPosition, rotation, transform);
 				}
 			}
 		}

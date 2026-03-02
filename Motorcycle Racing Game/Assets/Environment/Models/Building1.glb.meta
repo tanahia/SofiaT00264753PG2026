@@ -9,7 +9,7 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 804e1ce4c496647cfa3f1a1134187c71, type: 3}
   _removeEmptyRootObjects: 1
-  _scaleFactor: 0.15
+  _scaleFactor: 0.2
   _deduplicateResources: 0
   _maximumLod: 300
   _readWriteEnabled: 1
@@ -47,9 +47,11 @@ ScriptedImporter:
 '
   optimizeGameObjects: 0
   materials:
-  - {fileID: -5604800451583478215, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
-  - {fileID: -281588748032379266, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
-  - {fileID: 5102205637054436421, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: 1869794100454334074, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: 6105675678169242537, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: 3732967075776038512, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: 8229820757650230070, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: 3226750026287135335, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
   textures:
   - {fileID: 3070409480593088962, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
   - {fileID: 8356977545115736127, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
@@ -60,6 +62,10 @@ ScriptedImporter:
   - {fileID: 4977530096043430109, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
   - {fileID: -2686784351247301664, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
   - {fileID: 314335379448782268, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: -3926687174140238800, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: -1767504148114839039, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: 7876530471615878255, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+  - {fileID: -4367015613395570246, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
   hasSceneData: 1
   hasAnimationData: 0
   hasMaterialData: 1
@@ -67,6 +73,10 @@ ScriptedImporter:
   animations: []
   _extensions:
   - name: KHR_materials_specular
+    supported: 1
+    used: 1
+    required: 0
+  - name: KHR_materials_ior
     supported: 1
     used: 1
     required: 0
@@ -97,6 +107,18 @@ ScriptedImporter:
     shouldBeNormalMap: 0
   - texture: {fileID: 314335379448782268, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
     shouldBeLinear: 1
+    shouldBeNormalMap: 0
+  - texture: {fileID: -3926687174140238800, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+    shouldBeLinear: 1
+    shouldBeNormalMap: 0
+  - texture: {fileID: -1767504148114839039, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+    shouldBeLinear: 1
+    shouldBeNormalMap: 0
+  - texture: {fileID: 7876530471615878255, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+    shouldBeLinear: 0
+    shouldBeNormalMap: 0
+  - texture: {fileID: -4367015613395570246, guid: cc9043703b7aa22449728a2f0cfa713c, type: 3}
+    shouldBeLinear: 0
     shouldBeNormalMap: 0
   _mainAssetIdentifier: scenes/Scene
   _importPlugins: []

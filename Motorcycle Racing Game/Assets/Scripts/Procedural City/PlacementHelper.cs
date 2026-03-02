@@ -52,9 +52,9 @@ namespace SVS
            switch (direction)
             {
                 case Direction.Up:
-                    return Direction.Down;
+                    return Direction.Right;
                 case Direction.Down:
-                    return Direction.Up;
+                    return Direction.Left;
                 case Direction.Left:
                     return Direction.Up;
                 case Direction.Right:

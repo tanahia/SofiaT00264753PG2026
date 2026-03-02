@@ -8,7 +8,8 @@ namespace SVS
 	public class StructureHelper : MonoBehaviour
 	{
 		public HouseType[] houseTypes;
-		public Dictionary<Vector3Int, GameObject> structuresDictionary = new Dictionary<Vector3Int, GameObject>();
+        public float cellSize;
+        public Dictionary<Vector3Int, GameObject> structuresDictionary = new Dictionary<Vector3Int, GameObject>();
 
 		public void PlaceStructuresAroundRoad(List<Vector3Int> roadPositions)
 		{
@@ -17,7 +18,7 @@ namespace SVS
 
             foreach (var freeSpot in freeEstateSpots)
             {
-                if(blockedPositions.Contains(freeSpot.Key))
+                if(blockedPositions.Contains(freeSpot.Key) || structuresDictionary.ContainsKey(freeSpot.Key))
                 {
                     continue;
                 }
@@ -44,15 +45,21 @@ namespace SVS
                         structuresDictionary.Add(freeSpot.Key, house);
                         break;
                     }
-                    if (houseTypes[i].isBuildingAvailable())
+                    else if (houseTypes[i].isBuildingAvailable())
                     {
-                        if (houseTypes[i].sizeRequired > 1)
+                       /* if (houseTypes[i].sizeRequired > 1)
                         {
-                        var halfSize =Mathf.FloorToInt(houseTypes[i].sizeRequired / 2.0f);
+                       
                             List<Vector3Int> temppositionsToBlock = new List<Vector3Int>();
-                            if (VerifyHousesFits(halfSize, freeEstateSpots, freeSpot,blockedPositions, ref temppositionsToBlock))
+                            Vector3Int direction;
+
+                            if (freeSpot.Value == Direction.Down || freeSpot.Value == Direction.Up)
+                                direction = Vector3Int.right;
+                            else
+                                direction = new Vector3Int(0, 0, 1);
+                            if (VerifyHousesFits(houseTypes[i].sizeRequired, roadPositions, freeSpot.Key, direction,ref temppositionsToBlock))
                             { 
-                            blockedPositions.AddRange(temppositionsToBlock);
+                                blockedPositions.AddRange(temppositionsToBlock);
                                 var house = SpawnPrefab(houseTypes[i].GetPrefab(), freeSpot.Key, rotation);
                                 structuresDictionary.Add(freeSpot.Key, house);
                                 foreach (var position in temppositionsToBlock)
@@ -63,11 +70,11 @@ namespace SVS
                             }
                         }
                         else
-                        {
+                        {*/
                             var house = SpawnPrefab(houseTypes[i].GetPrefab(), freeSpot.Key, rotation);
                             structuresDictionary.Add(freeSpot.Key, house);
                             
-                        }
+                       // }
                         break;
                     }
                 }
@@ -75,35 +82,37 @@ namespace SVS
             }
         }
 
-        private bool VerifyHousesFits(int halfSize, Dictionary<Vector3Int, Direction> freeEstateSpots, KeyValuePair<Vector3Int, Direction> freeSpot, List<Vector3Int> blockedPositions, ref List<Vector3Int> temppositionsToBlock)
+        private bool VerifyHousesFits(int sizeRequired,
+    List<Vector3Int> roadPositions,
+    Vector3Int startPosition,
+    Vector3Int direction,
+    ref List<Vector3Int> positionsToBlock)
         {
-            Vector3Int direction = Vector3Int.zero;
-            if(freeSpot.Value == Direction.Down || freeSpot.Value == Direction.Up)
+            for (int i = 1; i < sizeRequired; i++)
             {
-                direction = Vector3Int.right;
-            }
-            else
-            {
-                direction = new Vector3Int(0, 0, 1);
-            }
-            for (int i = 1; i <= halfSize; i++)
-            {
-               var position1=freeSpot.Key + direction * i;
-               var position2 = freeSpot.Key - direction * i;
-                if (!freeEstateSpots.ContainsKey(position1)||!freeEstateSpots.ContainsKey(position2)||blockedPositions.Contains(position1) || blockedPositions.Contains(position2))
-                {
-                    return false; 
-                }
-                temppositionsToBlock.Add(position1);
-                temppositionsToBlock.Add(position2);
+                var nextPos = startPosition + direction * i;
+
+                if (roadPositions.Contains(nextPos))
+                    return false;
+                if (structuresDictionary.ContainsKey(nextPos))
+                    return false;
+
+                positionsToBlock.Add(nextPos);
             }
             return true;
         }
 
         private GameObject SpawnPrefab(GameObject prefab, Vector3Int position, Quaternion rotation)
         {
-           var newStructure = Instantiate(prefab, position, rotation,transform);
-            return newStructure;
+            //  var newStructure = Instantiate(prefab, position, rotation,transform);
+            // return newStructure;
+            Vector3 worldPosition = new Vector3(
+         position.x * cellSize,
+         position.y,
+         position.z * cellSize
+     );
+
+            return Instantiate(prefab, worldPosition, rotation, transform);
         }
 
         private Dictionary<Vector3Int, Direction> FindFreeSpacesAroundRoad(List<Vector3Int> roadPositions)
