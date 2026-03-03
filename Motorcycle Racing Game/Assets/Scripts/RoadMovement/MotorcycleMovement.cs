@@ -66,7 +66,7 @@ public class MotorcycleMovement : MonoBehaviour
             else if (choiceMaking == true)
             {
                 _rb.linearVelocity = Vector3.zero;
-                print("stop");
+               // print("stop");
             }
         }
         
