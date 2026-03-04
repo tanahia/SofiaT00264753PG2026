@@ -1,3 +1,4 @@
+using GLTF.Schema;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,12 +11,14 @@ public class DialogueManager : MonoBehaviour
     private Queue <string> sentences;//First in First out
    
     public TextMeshProUGUI dialogueText;
+    public Animator animator;
    public void Awake()
     {
         sentences = new Queue<string>();
     }
     public void StartDialogue(Dialogue dialogue)
     {
+        animator.SetBool("isOpen", true);
         Debug.Log("Starting tutorial with " + dialogue.sentences.Length + " sentences.");
 
          sentences.Clear();
@@ -42,7 +45,9 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EndDialogue()
-    {Debug.Log("End of tutorial.");
+    {
+        animator.SetBool("isOpen", false);
+        Debug.Log("End of tutorial.");
     }
 
  
