@@ -10,10 +10,18 @@ public class DialogueManager : MonoBehaviour
 {
     private Queue <string> sentences;//First in First out
    
-    public TextMeshProUGUI dialogueText;
-    public Animator animator;
-   public void Awake()
+    [SerializeField] TextMeshProUGUI tutorialText;
+    [SerializeField] TextMeshProUGUI dialogueText;
+    [SerializeField] Animator animator;
+    DialogueTrigger toggle;
+    bool tutorialOrChoice;
+
+
+    DialogueTrigger manager;
+    public void Awake()
     {
+        manager = FindFirstObjectByType<DialogueTrigger>();
+        toggle = FindFirstObjectByType<DialogueTrigger>();
         sentences = new Queue<string>();
     }
     public void StartDialogue(Dialogue dialogue)
@@ -41,12 +49,17 @@ public class DialogueManager : MonoBehaviour
         }
        
         string sentence = sentences.Dequeue();
+         tutorialOrChoice = toggle.getToggle();
+        if (tutorialOrChoice)
+            tutorialText.text = sentence;
+        else
         dialogueText.text = sentence;
     }
 
     public void EndDialogue()
     {
         animator.SetBool("isOpen", false);
+        manager.DialogEnded();
         Debug.Log("End of tutorial.");
     }
 

@@ -30,7 +30,14 @@ public class MotorcycleMovement : MonoBehaviour
 
     bool choiceMaking = false;
 
+    public enum State
+    {
+        Tutorial,
+        UserControled,
+        IntersectionChoice
+    }
 
+    State currentState = State.Tutorial;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -41,34 +48,44 @@ public class MotorcycleMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _input.x = Input.GetAxis("Horizontal");
-        _input.y = Input.GetAxis("Vertical");
 
-        bool isBoosting = Input.GetKey(KeyCode.LeftShift);
-        bool isBraking = Input.GetKey(KeyCode.LeftControl);
-
-        float currentSpeedLimit = isBoosting ? boostSpeedLimit : firstSpeedLimit;
-        float currentAcceleration = isBoosting ? accelaration * boostMultiplier : accelaration;
-        if (isBraking)
+        switch (currentState)
         {
-            Brake();
-        }
-        else
-        {
-            if (choiceMaking == false)
-            {
-                if (_rb.linearVelocity.magnitude <= currentSpeedLimit)
-                    Accelarate(currentAcceleration);
-                else
-                    _rb.linearVelocity = _rb.linearVelocity.normalized * currentSpeedLimit;
-                Steer();
-            }
-            else if (choiceMaking == true)
-            {
+            case State.Tutorial:
+                Cursor.lockState = CursorLockMode.None;
                 _rb.linearVelocity = Vector3.zero;
-               // print("stop");
-            }
+                break;
+            case State.UserControled:
+                Cursor.lockState = CursorLockMode.Locked;
+                _input.x = Input.GetAxis("Horizontal");
+                _input.y = Input.GetAxis("Vertical");
+
+                bool isBoosting = Input.GetKey(KeyCode.LeftShift);
+                bool isBraking = Input.GetKey(KeyCode.LeftControl);
+
+                float currentSpeedLimit = isBoosting ? boostSpeedLimit : firstSpeedLimit;
+                float currentAcceleration = isBoosting ? accelaration * boostMultiplier : accelaration;
+                if (isBraking)
+                {
+                    Brake();
+                }
+                else
+                {
+                        if (_rb.linearVelocity.magnitude <= currentSpeedLimit)
+                            Accelarate(currentAcceleration);
+                        else
+                            _rb.linearVelocity = _rb.linearVelocity.normalized * currentSpeedLimit;
+                        Steer();
+                        // print("stop");                   
+                }
+                break;
+            case State.IntersectionChoice:
+                Cursor.lockState = CursorLockMode.None;
+                _rb.linearVelocity = Vector3.zero;
+                print("enter");
+                break;
         }
+
         
     }
 
@@ -130,6 +147,18 @@ public class MotorcycleMovement : MonoBehaviour
     }
    public void OnTriggerEnter(Collider other)
     {
-        choiceMaking = true;
+       currentState = State.IntersectionChoice;
+       
+    }
+
+
+    public void GoToState(State newState)
+    {
+        currentState= newState;
+
+    }
+    public State getCurrentState()
+    {
+        return currentState;
     }
 }
