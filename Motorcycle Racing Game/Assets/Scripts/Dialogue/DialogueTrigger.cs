@@ -9,11 +9,13 @@ public class DialogueTrigger : MonoBehaviour
     MotorcycleMovement player;
     MotorcycleMovement.State currentState;
     [SerializeField] TextMeshProUGUI hideChoiceDialogue;
+    [SerializeField] TextMeshProUGUI hideTutorial;
     bool isTutorial;
 
     public void Start()
     {
         hideChoiceDialogue.gameObject.SetActive(false);
+        hideTutorial.gameObject.SetActive(true);
         player = FindFirstObjectByType<MotorcycleMovement>();
         TriggerTutorial();
     }
@@ -23,13 +25,14 @@ public class DialogueTrigger : MonoBehaviour
         if(currentState == MotorcycleMovement.State.IntersectionChoice)
             {
             hideChoiceDialogue.gameObject.SetActive(true);
+            hideTutorial.gameObject.SetActive(false);
             TriggerChoiceMaking();
         }
 
     }
     public void TriggerTutorial ()
     {
-        isTutorial=true;
+       isTutorial=true;
        
         FindFirstObjectByType<DialogueManager>().StartDialogue(tutorial);
         

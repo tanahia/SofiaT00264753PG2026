@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueText;
     [SerializeField] Animator animator;
     DialogueTrigger toggle;
-    bool tutorialOrChoice;
+    bool isTutorial;
 
 
     DialogueTrigger manager;
@@ -49,11 +49,11 @@ public class DialogueManager : MonoBehaviour
         }
        
         string sentence = sentences.Dequeue();
-         tutorialOrChoice = toggle.getToggle();
-        if (tutorialOrChoice)
+         isTutorial = toggle.getToggle();
+        if (isTutorial)
             tutorialText.text = sentence;
         else
-        dialogueText.text = sentence;
+            dialogueText.text = sentence;
     }
 
     public void EndDialogue()

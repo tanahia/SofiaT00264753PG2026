@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Road_3Way
       objectReference: {fileID: 0}
+    - target: {fileID: 8771091787928289351, guid: c5b4c422e01f613408b74af735e76663, type: 3}
+      propertyPath: m_TagString
+      value: TIntersection
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

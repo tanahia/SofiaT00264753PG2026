@@ -22,8 +22,6 @@ public class MotorcycleMovement : MonoBehaviour
     [SerializeField] GameObject[] wheels;
 
     float startHandlePosition;
-    float startFrontWheelY;
-    float startFrontWheelZ;
     float currentY;
     float currentZ;
     float currentX;
