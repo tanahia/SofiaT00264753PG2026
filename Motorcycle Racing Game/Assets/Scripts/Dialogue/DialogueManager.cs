@@ -11,23 +11,26 @@ public class DialogueManager : MonoBehaviour
     private Queue <string> sentences;//First in First out
    
     [SerializeField] TextMeshProUGUI tutorialText;
-    [SerializeField] TextMeshProUGUI dialogueText;
+    [SerializeField] TextMeshProUGUI dialogueIntersectionText;
+    [SerializeField] TextMeshProUGUI dialogueTIntersectionLeftText;
+    [SerializeField] TextMeshProUGUI dialogueTIntersectionRightText;
     [SerializeField] Animator animator;
-    DialogueTrigger toggle;
-    bool isTutorial;
+    DialogueTrigger.State currentState;
+
 
 
     DialogueTrigger manager;
     public void Awake()
     {
         manager = FindFirstObjectByType<DialogueTrigger>();
-        toggle = FindFirstObjectByType<DialogueTrigger>();
+
         sentences = new Queue<string>();
+       
     }
     public void StartDialogue(Dialogue dialogue)
     {
+        currentState = manager.getCurrentDialogueState();
         animator.SetBool("isOpen", true);
-        Debug.Log("Starting tutorial with " + dialogue.sentences.Length + " sentences.");
 
          sentences.Clear();
 
@@ -49,11 +52,15 @@ public class DialogueManager : MonoBehaviour
         }
        
         string sentence = sentences.Dequeue();
-         isTutorial = toggle.getToggle();
-        if (isTutorial)
+
+        if (currentState==DialogueTrigger.State.Tutorial)
             tutorialText.text = sentence;
-        else
-            dialogueText.text = sentence;
+        else if(currentState == DialogueTrigger.State.IntersectionDialogue)
+            dialogueIntersectionText.text = sentence;
+        else if (currentState == DialogueTrigger.State.TIntersectionLeft)
+            dialogueTIntersectionLeftText.text = sentence;
+        else if (currentState == DialogueTrigger.State.TIntersectionRight)
+            dialogueTIntersectionRightText.text = sentence;
     }
 
     public void EndDialogue()

@@ -25,17 +25,15 @@ public class MotorcycleMovement : MonoBehaviour
     float currentY;
     float currentZ;
     float currentX;
-
-    bool choiceMaking = false;
+  
 
     public enum State
     {
-        Tutorial,
+        Dialogue,
         UserControled,
-        IntersectionChoice
     }
 
-    State currentState = State.Tutorial;
+    State currentState = State.Dialogue;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -49,7 +47,7 @@ public class MotorcycleMovement : MonoBehaviour
 
         switch (currentState)
         {
-            case State.Tutorial:
+            case State.Dialogue:
                 Cursor.lockState = CursorLockMode.None;
                 _rb.linearVelocity = Vector3.zero;
                 break;
@@ -74,13 +72,8 @@ public class MotorcycleMovement : MonoBehaviour
                         else
                             _rb.linearVelocity = _rb.linearVelocity.normalized * currentSpeedLimit;
                         Steer();
-                        // print("stop");                   
+                                         
                 }
-                break;
-            case State.IntersectionChoice:
-                Cursor.lockState = CursorLockMode.None;
-                _rb.linearVelocity = Vector3.zero;
-                print("enter");
                 break;
         }
 
@@ -145,8 +138,12 @@ public class MotorcycleMovement : MonoBehaviour
     }
    public void OnTriggerEnter(Collider other)
     {
-       currentState = State.IntersectionChoice;
-       
+        if (other.CompareTag("Intersection")|| other.CompareTag("TIntersection")|| other.CompareTag("End")||other.CompareTag("Corner"))
+        {
+            currentState = State.Dialogue;
+            Debug.Log("Enter Choice Dialogue");
+        }
+
     }
 
 
