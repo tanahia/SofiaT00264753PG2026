@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,12 +21,17 @@ public class MotorcycleMovement : MonoBehaviour
     [SerializeField] float firstSpeedLimit;
     [SerializeField] float resetMultiplier;
     [SerializeField] GameObject[] wheels;
+    public Transform visualModel;
+    
+    DialogueManager dialogueManager;
+
 
     float startHandlePosition;
     float currentY;
     float currentZ;
     float currentX;
   
+
 
     public enum State
     {
@@ -39,6 +45,7 @@ public class MotorcycleMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         
         startHandlePosition = steeringHandle.localEulerAngles.x;
+        dialogueManager = FindFirstObjectByType<DialogueManager>();
     }
 
     // Update is called once per frame
@@ -155,5 +162,32 @@ public class MotorcycleMovement : MonoBehaviour
     public State getCurrentState()
     {
         return currentState;
+    }
+
+    /* public void ApplyVisualRotationToPhysics()
+     {
+         transform.rotation = Quaternion.Euler(0, dialogueManager.pendingTurnAngle, 0);
+
+     }*/
+    public IEnumerator Turn(float angle)
+    { 
+
+        Quaternion startRot = transform.rotation;
+        Quaternion targetRot = Quaternion.Euler(0, transform.eulerAngles.y + angle, 0);
+        Vector3 move=new Vector3(1f,0,3f);
+
+        float duration = 0.8f;
+        float time = 0f;
+        transform.localPosition +=move;
+        while (time < duration)
+        {
+            time += Time.fixedDeltaTime;
+            transform.rotation = Quaternion.Slerp(startRot, targetRot, time / duration);
+            yield return null;
+        }
+
+        transform.rotation = targetRot;
+
+        currentState = State.UserControled;
     }
 }

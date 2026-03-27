@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
@@ -15,6 +16,8 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] TextMeshProUGUI hideTIntersectionRightDialogue;
     [SerializeField] TextMeshProUGUI hideEnd;
     [SerializeField] TextMeshProUGUI hideTIntersectionDialogueRightLeft;
+    //GameObject rightButton;
+
     bool dialogueStarted = false;
     public enum State
     {
@@ -30,6 +33,7 @@ public class DialogueTrigger : MonoBehaviour
     public void Start()
     {     
         player = FindFirstObjectByType<MotorcycleMovement>();
+        //rightButton= GameObject.Find("Right");
         hideIntersectionDialogue.gameObject.SetActive(false);
         hideTIntersectionLeftDialogue.gameObject.SetActive(false);
         hideTIntersectionRightDialogue.gameObject.SetActive(false);
@@ -71,6 +75,7 @@ public class DialogueTrigger : MonoBehaviour
                     hideIntersectionDialogue.gameObject.SetActive(false);
                     hideTutorial.gameObject.SetActive(false);
                     hideEnd.gameObject.SetActive(false);
+
                     TriggerChoiceMaking();
                     Debug.Log("T intersection right");
                     break;
@@ -114,6 +119,7 @@ public class DialogueTrigger : MonoBehaviour
     public void DialogEnded()
     {
         dialogueStarted = false;
+        
         player.GoToState(MotorcycleMovement.State.UserControled);                              
     }
 
@@ -127,21 +133,67 @@ public class DialogueTrigger : MonoBehaviour
         else if (other.CompareTag("TIntersection"))
         {
 
-            if (other.transform.rotation.eulerAngles.y == 90)
+            if ((other.transform.rotation.eulerAngles.y == 90 || other.transform.rotation.eulerAngles.y == -90) && transform.rotation.eulerAngles.y == 0)
             {
                 currentDialogueState = State.TIntersectionLeft;
                 Debug.Log("TIntersectionToLeft");
             }
-            else if (other.transform.rotation.eulerAngles.y == 270)
+            else if ((other.transform.rotation.eulerAngles.y == 90 || other.transform.rotation.eulerAngles.y == -90) && transform.rotation.eulerAngles.y == 90)
+            {
+                currentDialogueState = State.TIntersectionDialogueRightLeft;
+                Debug.Log("TIntersectionToRightLeft");
+            }
+            else if ((other.transform.rotation.eulerAngles.y == 90 || other.transform.rotation.eulerAngles.y == -90) && (transform.rotation.eulerAngles.y == 180|| transform.rotation.eulerAngles.y == -180))
             {
                 currentDialogueState = State.TIntersectionRight;
                 Debug.Log("TIntersectionToRight");
             }
-            else if (other.transform.rotation.eulerAngles.y == 0)
+            else if ((other.transform.rotation.eulerAngles.y == 270 || other.transform.rotation.eulerAngles.y == -270) && transform.rotation.eulerAngles.y == 0)
+            {
+                currentDialogueState = State.TIntersectionRight;
+                Debug.Log("TIntersectionToRight");
+            }
+            else if ((other.transform.rotation.eulerAngles.y == 270 || other.transform.rotation.eulerAngles.y == -270) && (transform.rotation.eulerAngles.y == 180 || transform.rotation.eulerAngles.y == -180))
+            {
+                currentDialogueState = State.TIntersectionLeft;
+                Debug.Log("TIntersectionToLeft");
+            }
+            else if ((other.transform.rotation.eulerAngles.y == 270 || other.transform.rotation.eulerAngles.y == -270) && (transform.rotation.eulerAngles.y == -90|| transform.rotation.eulerAngles.y == 270))
+            {
+                currentDialogueState = State.TIntersectionDialogueRightLeft;
+                Debug.Log("TIntersectionToRightLeft");
+            }
+            else if (other.transform.rotation.eulerAngles.y == 0 && transform.rotation.eulerAngles.y == 0)
             {
                 currentDialogueState = State.TIntersectionDialogueRightLeft;
                 Debug.Log("TIntersectionToLeftRight");
             }
+            if (other.transform.rotation.eulerAngles.y == 0 && transform.rotation.eulerAngles.y == 90)
+            {
+                currentDialogueState = State.TIntersectionRight;
+                Debug.Log("TIntersectionToRight");
+            }
+            if (other.transform.rotation.eulerAngles.y == 0 && transform.rotation.eulerAngles.y == -90)
+            {
+                currentDialogueState = State.TIntersectionLeft;
+                Debug.Log("TIntersectionToLeft");
+            }
+            else if ((other.transform.rotation.eulerAngles.y == 180 || other.transform.rotation.eulerAngles.y == -180) && (transform.rotation.eulerAngles.y == 180 || transform.rotation.eulerAngles.y == -180))
+            {
+                currentDialogueState = State.TIntersectionDialogueRightLeft;
+                Debug.Log("TIntersectionToRightLeft");
+            }
+            else if ((other.transform.rotation.eulerAngles.y == 180 || other.transform.rotation.eulerAngles.y == -180) && (transform.rotation.eulerAngles.y == -90 || transform.rotation.eulerAngles.y == 270))
+            {
+                currentDialogueState = State.TIntersectionRight;
+                Debug.Log("TIntersectionToRight");
+            }
+            else if ((other.transform.rotation.eulerAngles.y == 180 || other.transform.rotation.eulerAngles.y == -180) && (transform.rotation.eulerAngles.y == 90 || transform.rotation.eulerAngles.y == -270))
+            {
+                currentDialogueState = State.TIntersectionLeft;
+                Debug.Log("TIntersectionToLeft");
+            }
+            
         }
         else if (other.CompareTag("End"))
         {
@@ -158,4 +210,6 @@ public class DialogueTrigger : MonoBehaviour
     {
         return currentDialogueState;
     }
+
 }
+

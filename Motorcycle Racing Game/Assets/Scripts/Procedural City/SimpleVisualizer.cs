@@ -9,7 +9,7 @@ namespace SVS
     {
         public LSystemGenerator lsystem;
         List<Vector3> positions = new List<Vector3>();
-        public GameObject prefab;
+     //   public GameObject prefab;
         public Material lineMaterial;
 
         private int length = 10;
@@ -91,10 +91,10 @@ namespace SVS
                 }
             }
 
-            foreach (var position in positions)
+           /* foreach (var position in positions)
             {
                 Instantiate(prefab, position, Quaternion.identity);
-            }
+            }*/
 
         }
 

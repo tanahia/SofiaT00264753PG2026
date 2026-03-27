@@ -15,14 +15,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueTIntersectionLeftText;
     [SerializeField] TextMeshProUGUI dialogueTIntersectionRightText;
     [SerializeField] Animator animator;
+    [SerializeField] Animator rightTurn;
     DialogueTrigger.State currentState;
-
-
-
+    MotorcycleMovement player;
     DialogueTrigger manager;
     public void Awake()
     {
         manager = FindFirstObjectByType<DialogueTrigger>();
+        player = FindFirstObjectByType<MotorcycleMovement>();
 
         sentences = new Queue<string>();
        
@@ -68,8 +68,17 @@ public class DialogueManager : MonoBehaviour
         animator.SetBool("isOpen", false);
         manager.DialogEnded();
         Debug.Log("End of tutorial.");
+        
     }
 
- 
+    public void turnRight()
+    {
+
+        player.StartCoroutine(player.Turn(90f));
+    }
+    public void turnLeft()
+    {
+        player.StartCoroutine(player.Turn(-90f));
+    }
 
 }
