@@ -2,27 +2,40 @@ using UnityEngine;
 
 public class ObstacleCollision : MonoBehaviour, IHealth
 {
-    public int health = 10;
+    public int maxHealth = 3;
+    public int curHealth;
+    public HealthConrol health;
+
+    public void Start()
+    {
+       curHealth = maxHealth;
+        health.setMaxHealth(maxHealth);
+    }
+
+
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        curHealth -= damage;
         Debug.Log("Dealing damage.");
-        if (health <= 0)
+        health.setHealth(curHealth);
+        if (curHealth <= 0)
         {
             Debug.Log("Player destroyed!");
             //Destroy(gameObject);
         }
     }
-
-public void OnCollisionEnter(Collision collision)
+  
+    public void OnCollisionEnter(Collision collision)
     {
        
-      /*  if (collision.gameObject.CompareTag("Obstacle"))
+       if (collision.gameObject.CompareTag("Obstacle"))
         {
 
                 Debug.Log("Collision detected");
-                TakeDamage(5);
+                TakeDamage(1);
             
-        }*/
+        }
     }
+
+
 }

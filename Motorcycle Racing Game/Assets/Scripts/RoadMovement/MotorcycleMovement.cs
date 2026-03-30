@@ -164,11 +164,6 @@ public class MotorcycleMovement : MonoBehaviour
         return currentState;
     }
 
-    /* public void ApplyVisualRotationToPhysics()
-     {
-         transform.rotation = Quaternion.Euler(0, dialogueManager.pendingTurnAngle, 0);
-
-     }*/
     public IEnumerator Turn(float angle)
     { 
 
