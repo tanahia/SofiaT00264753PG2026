@@ -17,12 +17,12 @@ public class ObstacleCollision : MonoBehaviour, IHealth
 public void OnCollisionEnter(Collision collision)
     {
        
-        if (collision.gameObject.CompareTag("Obstacle"))
+      /*  if (collision.gameObject.CompareTag("Obstacle"))
         {
 
                 Debug.Log("Collision detected");
                 TakeDamage(5);
             
-        }
+        }*/
     }
 }

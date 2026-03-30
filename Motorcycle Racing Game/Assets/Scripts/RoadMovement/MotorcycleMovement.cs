@@ -21,9 +21,9 @@ public class MotorcycleMovement : MonoBehaviour
     [SerializeField] float firstSpeedLimit;
     [SerializeField] float resetMultiplier;
     [SerializeField] GameObject[] wheels;
-    public Transform visualModel;
+
     
-    DialogueManager dialogueManager;
+   // DialogueManager dialogueManager;
 
 
     float startHandlePosition;
@@ -45,7 +45,7 @@ public class MotorcycleMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         
         startHandlePosition = steeringHandle.localEulerAngles.x;
-        dialogueManager = FindFirstObjectByType<DialogueManager>();
+       // dialogueManager = FindFirstObjectByType<DialogueManager>();
     }
 
     // Update is called once per frame
@@ -189,5 +189,6 @@ public class MotorcycleMovement : MonoBehaviour
         transform.rotation = targetRot;
 
         currentState = State.UserControled;
+        Debug.Log("Turn");
     }
 }

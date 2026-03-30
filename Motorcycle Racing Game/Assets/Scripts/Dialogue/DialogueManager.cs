@@ -15,14 +15,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueTIntersectionLeftText;
     [SerializeField] TextMeshProUGUI dialogueTIntersectionRightText;
     [SerializeField] Animator animator;
-    [SerializeField] Animator rightTurn;
     DialogueTrigger.State currentState;
-    MotorcycleMovement player;
+   [SerializeField] MotorcycleMovement player;
     DialogueTrigger manager;
     public void Awake()
     {
         manager = FindFirstObjectByType<DialogueTrigger>();
-        player = FindFirstObjectByType<MotorcycleMovement>();
+     //   player = FindFirstObjectByType<MotorcycleMovement>();
 
         sentences = new Queue<string>();
        
@@ -75,10 +74,12 @@ public class DialogueManager : MonoBehaviour
     {
 
         player.StartCoroutine(player.Turn(90f));
+        Debug.Log("Turn Right");
     }
     public void turnLeft()
     {
         player.StartCoroutine(player.Turn(-90f));
+        Debug.Log("Turn Left");
     }
 
 }
