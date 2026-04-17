@@ -4442,9 +4442,9 @@ RectTransform:
   - {fileID: 438841085}
   m_Father: {fileID: 229162551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -100}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1750532743
@@ -4697,10 +4697,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SVS.StructureHelper
   houseTypes:
   - prefabs:
-    - {fileID: 9097069939207354990, guid: 963aec0715cbb224a92652d99bc841eb, type: 3}
-    - {fileID: 1267752594550630789, guid: c008f7d315b9ab8419aebf1e17d5e1e5, type: 3}
-    - {fileID: 2195294821514908094, guid: 23dd5fd9e518d264abb70731252a7e2a, type: 3}
     - {fileID: 4648639624746843757, guid: dba8e43e671d90d4a88a65a26f484f21, type: 3}
+    - {fileID: 9097069939207354990, guid: 963aec0715cbb224a92652d99bc841eb, type: 3}
+    sizeRequired: 1
+    quantity: 20
+    quantityAlreadyPlaced: 0
+  - prefabs:
+    - {fileID: 2195294821514908094, guid: 23dd5fd9e518d264abb70731252a7e2a, type: 3}
+    - {fileID: 1267752594550630789, guid: c008f7d315b9ab8419aebf1e17d5e1e5, type: 3}
+    sizeRequired: 1
     quantity: -1
     quantityAlreadyPlaced: 0
   cellSize: 6
