@@ -11,6 +11,7 @@ namespace SVS
         public float cellSize = 3f;
         Dictionary<Vector3Int, GameObject> roadDictionary = new Dictionary<Vector3Int, GameObject>();
 		HashSet<Vector3Int> fixRoadCandidates = new HashSet<Vector3Int>();
+		
 
 		public List<Vector3Int> GetRoadPositions()
 		{
@@ -31,6 +32,7 @@ namespace SVS
 				{
 					continue;
 				}
+				
                 Vector3 worldPosition = GridToWorld(position);
                 var road = Instantiate(roadStraight, worldPosition, rotation, transform);
                 roadDictionary.Add(position, road);
@@ -130,6 +132,7 @@ namespace SVS
 				}
 			}
 		}
+
 	}
 }
 
