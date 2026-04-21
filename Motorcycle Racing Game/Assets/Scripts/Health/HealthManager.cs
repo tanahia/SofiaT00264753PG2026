@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObstacleCollision : MonoBehaviour, IHealth
+public class HealthManager : MonoBehaviour, IHealth
 {
     public int maxHealth = 3;
     public int curHealth;
@@ -24,17 +24,15 @@ public class ObstacleCollision : MonoBehaviour, IHealth
             //Destroy(gameObject);
         }
     }
-  
-    public void OnCollisionEnter(Collision collision)
+    
+   public void AddHealth(int health)
     {
-       
-       if (collision.gameObject.CompareTag("Obstacle"))
+        curHealth += health;
+        if (curHealth > maxHealth)
         {
-
-                Debug.Log("Collision detected");
-                TakeDamage(1);
-            
+            curHealth = maxHealth;
         }
+        this.health.setHealth(curHealth);
     }
 
 

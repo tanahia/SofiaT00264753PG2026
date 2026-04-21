@@ -2,18 +2,22 @@ using NUnit.Framework;
 using SVS;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] GameObject goodItemGO, badItemGO;
     List<Item> items = new List<Item>();
-    private int maxItems = 5;
+    private int maxItems = 15;
+    private float spawnHeight = 0.5f;
     RoadHelper roadHelper;
-    List<Vector3Int> availablePositions;
-    Dictionary<Item, Vector3Int> itemActions = new Dictionary<Item, Vector3Int>();
+    Vector3Int randomPos;
+    
+     Dictionary<Vector3Int, Item> itemPositions = new Dictionary<Vector3Int, Item>();
     void Start()
     {
+       
         roadHelper = FindFirstObjectByType<RoadHelper>();
         PopulateItems();
     }
@@ -27,9 +31,12 @@ public class ItemManager : MonoBehaviour
     {
         GameObject item = UnityEngine.Random.value > 0.5f ? goodItemGO : badItemGO;
         GameObject newItem = Instantiate(item, position, Quaternion.identity);
+        
         Item newItemScript = newItem.GetComponent<Item>();
         items.Add(newItemScript);
         newItemScript.Iam(this);
+        Vector3Int gridPos = Vector3Int.RoundToInt(position/roadHelper.cellSize);
+        itemPositions[gridPos] = newItemScript;
 
 
     }
@@ -52,9 +59,22 @@ public class ItemManager : MonoBehaviour
         {
             (item as BadItem).DoBadThing();
         }
+        Vector3Int index = default;
+
+        foreach (var key in itemPositions)
+        {
+            if (key.Value == item)
+            {
+                index = key.Key;
+                break;
+            }
+        }
+
+        itemPositions.Remove(index);
+
         Vector3 randomPosition = GetRandomRoadPosition();
         SpawnItemAt(randomPosition);
-        items.Remove(item);
+      items.Remove(item);
     }
     internal Vector3 GetRandomRoadPosition()
     {
@@ -64,8 +84,21 @@ public class ItemManager : MonoBehaviour
         {
             return Vector3.zero;
         }
-        Vector3Int randomPos = roadPositions[UnityEngine.Random.Range(0, roadPositions.Count)];
-        float cellSize = roadHelper.cellSize;
-        return new Vector3(randomPos.x * cellSize, randomPos.y, randomPos.z * cellSize);
+
+        do
+        {
+            randomPos = roadPositions[UnityEngine.Random.Range(0, roadPositions.Count)];
+        }
+        while (itemPositions.ContainsKey(randomPos));
+
+        
+        return GetOffsetRandomPosition(randomPos);
+    }
+    Vector3 GetOffsetRandomPosition(Vector3Int position)
+    {
+        float cellsize = roadHelper.cellSize;
+        float offsetAmount = cellsize * 0.3f;
+        float offsetX = UnityEngine.Random.value > 0.5f ? offsetAmount : -offsetAmount;
+        return new Vector3(position.x * cellsize + offsetX, position.y+spawnHeight, position.z * cellsize);
     }
 }

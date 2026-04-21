@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class BadItem :Item
 {
-internal void DoBadThing()
+    private HealthManager healthManager;
+    void Start()
     {
-        print("Bad");
+        healthManager = FindFirstObjectByType<HealthManager>();
+    }
+    internal void DoBadThing()
+    {
+       healthManager.TakeDamage(1);
     }
 }

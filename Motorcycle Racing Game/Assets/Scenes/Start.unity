@@ -3136,7 +3136,7 @@ MonoBehaviour:
   steeringMotorcycle: {fileID: 1564754924}
   accelaration: 5
   brakeAccelaration: 50
-  steeringAccelearation: 60
+  steeringAccelearation: 20
   angleMultiplier: 5
   boostMultiplier: 5
   boostSpeedLimit: 40
@@ -4743,16 +4743,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SVS.StructureHelper
   houseTypes:
   - prefabs:
-    - {fileID: 4648639624746843757, guid: dba8e43e671d90d4a88a65a26f484f21, type: 3}
+    - {fileID: 2195294821514908094, guid: 23dd5fd9e518d264abb70731252a7e2a, type: 3}
     - {fileID: 9097069939207354990, guid: 963aec0715cbb224a92652d99bc841eb, type: 3}
     sizeRequired: 1
-    quantity: 20
+    quantity: -1
     quantityAlreadyPlaced: 0
   - prefabs:
-    - {fileID: 2195294821514908094, guid: 23dd5fd9e518d264abb70731252a7e2a, type: 3}
+    - {fileID: 4648639624746843757, guid: dba8e43e671d90d4a88a65a26f484f21, type: 3}
     - {fileID: 1267752594550630789, guid: c008f7d315b9ab8419aebf1e17d5e1e5, type: 3}
     sizeRequired: 1
-    quantity: -1
+    quantity: 10
     quantityAlreadyPlaced: 0
   cellSize: 6
 --- !u!1 &1975332652
@@ -7427,6 +7427,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8449208569136439207, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8455933661503881783, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -7557,7 +7561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_LocalPosition.z
