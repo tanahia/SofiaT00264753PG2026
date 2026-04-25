@@ -19,13 +19,15 @@ public class DialogueTrigger : MonoBehaviour
     //GameObject rightButton;
 
     bool dialogueStarted = false;
+    DialogueManager dialogueManager;
     public enum State
     {
         Tutorial,
         IntersectionDialogue,
         TIntersectionLeft,
         TIntersectionRight,
-        CornerDialogue,
+        RightCorner,
+        LeftCorner,
         EndDialogue,
         TIntersectionDialogueRightLeft
     }
@@ -38,6 +40,7 @@ public class DialogueTrigger : MonoBehaviour
         hideTIntersectionLeftDialogue.gameObject.SetActive(false);
         hideTIntersectionRightDialogue.gameObject.SetActive(false);
         hideEnd.gameObject.SetActive(false);
+        dialogueManager = FindFirstObjectByType<DialogueManager>();
     }
     public void Update()
     {
@@ -78,11 +81,7 @@ public class DialogueTrigger : MonoBehaviour
 
                     TriggerChoiceMaking();
                     Debug.Log("T intersection right");
-                    break;
-                case State.CornerDialogue:
-
-                    Debug.Log("Corner");
-                    break;
+                    break;             
                 case State.EndDialogue:
                     hideTIntersectionLeftDialogue.gameObject.SetActive(false);
                     hideTIntersectionRightDialogue.gameObject.SetActive(false);
@@ -133,67 +132,22 @@ public class DialogueTrigger : MonoBehaviour
         else if (other.CompareTag("TIntersection"))
         {
 
-            if ((other.transform.rotation.eulerAngles.y == 90 || other.transform.rotation.eulerAngles.y == -90) && transform.rotation.eulerAngles.y == 0)
-            {
-                currentDialogueState = State.TIntersectionLeft;
-                Debug.Log("TIntersectionToLeft");
-            }
-            else if ((other.transform.rotation.eulerAngles.y == 90 || other.transform.rotation.eulerAngles.y == -90) && transform.rotation.eulerAngles.y == 90)
+            float angle = Vector3.SignedAngle(transform.forward, other.transform.forward, Vector3.up);
+
+            if (Mathf.Abs(angle) < 45 || Mathf.Abs(angle) > 135)
             {
                 currentDialogueState = State.TIntersectionDialogueRightLeft;
-                Debug.Log("TIntersectionToRightLeft");
             }
-            else if ((other.transform.rotation.eulerAngles.y == 90 || other.transform.rotation.eulerAngles.y == -90) && (transform.rotation.eulerAngles.y == 180|| transform.rotation.eulerAngles.y == -180))
-            {
-                currentDialogueState = State.TIntersectionRight;
-                Debug.Log("TIntersectionToRight");
-            }
-            else if ((other.transform.rotation.eulerAngles.y == 270 || other.transform.rotation.eulerAngles.y == -270) && transform.rotation.eulerAngles.y == 0)
-            {
-                currentDialogueState = State.TIntersectionRight;
-                Debug.Log("TIntersectionToRight");
-            }
-            else if ((other.transform.rotation.eulerAngles.y == 270 || other.transform.rotation.eulerAngles.y == -270) && (transform.rotation.eulerAngles.y == 180 || transform.rotation.eulerAngles.y == -180))
+            else if (angle > 45)
             {
                 currentDialogueState = State.TIntersectionLeft;
-                Debug.Log("TIntersectionToLeft");
             }
-            else if ((other.transform.rotation.eulerAngles.y == 270 || other.transform.rotation.eulerAngles.y == -270) && (transform.rotation.eulerAngles.y == -90|| transform.rotation.eulerAngles.y == 270))
-            {
-                currentDialogueState = State.TIntersectionDialogueRightLeft;
-                Debug.Log("TIntersectionToRightLeft");
-            }
-            else if (other.transform.rotation.eulerAngles.y == 0 && transform.rotation.eulerAngles.y == 0)
-            {
-                currentDialogueState = State.TIntersectionDialogueRightLeft;
-                Debug.Log("TIntersectionToLeftRight");
-            }
-            if (other.transform.rotation.eulerAngles.y == 0 && transform.rotation.eulerAngles.y == 90)
+            else if (angle < -45)
             {
                 currentDialogueState = State.TIntersectionRight;
-                Debug.Log("TIntersectionToRight");
             }
-            if (other.transform.rotation.eulerAngles.y == 0 && transform.rotation.eulerAngles.y == -90)
-            {
-                currentDialogueState = State.TIntersectionLeft;
-                Debug.Log("TIntersectionToLeft");
-            }
-            else if ((other.transform.rotation.eulerAngles.y == 180 || other.transform.rotation.eulerAngles.y == -180) && (transform.rotation.eulerAngles.y == 180 || transform.rotation.eulerAngles.y == -180))
-            {
-                currentDialogueState = State.TIntersectionDialogueRightLeft;
-                Debug.Log("TIntersectionToRightLeft");
-            }
-            else if ((other.transform.rotation.eulerAngles.y == 180 || other.transform.rotation.eulerAngles.y == -180) && (transform.rotation.eulerAngles.y == -90 || transform.rotation.eulerAngles.y == 270))
-            {
-                currentDialogueState = State.TIntersectionRight;
-                Debug.Log("TIntersectionToRight");
-            }
-            else if ((other.transform.rotation.eulerAngles.y == 180 || other.transform.rotation.eulerAngles.y == -180) && (transform.rotation.eulerAngles.y == 90 || transform.rotation.eulerAngles.y == -270))
-            {
-                currentDialogueState = State.TIntersectionLeft;
-                Debug.Log("TIntersectionToLeft");
-            }
-            
+            Debug.Log("Angle: " + angle);
+
         }
         else if (other.CompareTag("End"))
         {
@@ -202,10 +156,22 @@ public class DialogueTrigger : MonoBehaviour
         }
         else if (other.CompareTag("Corner"))
         {
+            float angle = Vector3.SignedAngle(transform.forward, other.transform.forward, Vector3.up);
+
+            if (angle > 0)
+            {
+                currentDialogueState = State.LeftCorner;
+                dialogueManager.turnLeft();
+            }
+            else
+            {
+                currentDialogueState = State.RightCorner;
+                dialogueManager.turnRight();
+            }
             Debug.Log("Corner");
-            currentDialogueState = State.CornerDialogue;
         }
     }
+  
     public State getCurrentDialogueState()
     {
         return currentDialogueState;

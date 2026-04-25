@@ -60,6 +60,7 @@ public class DialogueManager : MonoBehaviour
             dialogueTIntersectionLeftText.text = sentence;
         else if (currentState == DialogueTrigger.State.TIntersectionRight)
             dialogueTIntersectionRightText.text = sentence;
+
     }
 
     public void EndDialogue()
@@ -72,14 +73,12 @@ public class DialogueManager : MonoBehaviour
 
     public void turnRight()
     {
-
+      
         player.StartCoroutine(player.Turn(90f));
-        Debug.Log("Turn Right");
     }
     public void turnLeft()
-    {
+    {   
         player.StartCoroutine(player.Turn(-90f));
-        Debug.Log("Turn Left");
     }
 
 }

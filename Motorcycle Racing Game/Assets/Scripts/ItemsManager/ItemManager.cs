@@ -10,11 +10,12 @@ public class ItemManager : MonoBehaviour
     [SerializeField] GameObject goodItemGO, badItemGO;
     List<Item> items = new List<Item>();
     private int maxItems = 15;
-    private float spawnHeight = 0.5f;
+    private float spawnHeight;
     RoadHelper roadHelper;
     Vector3Int randomPos;
     
-     Dictionary<Vector3Int, Item> itemPositions = new Dictionary<Vector3Int, Item>();
+
+    Dictionary<Vector3Int, Item> itemPositions = new Dictionary<Vector3Int, Item>();
     void Start()
     {
        
@@ -29,8 +30,11 @@ public class ItemManager : MonoBehaviour
     }
     void SpawnItemAt(Vector3 position)
     {
-        GameObject item = UnityEngine.Random.value > 0.5f ? goodItemGO : badItemGO;
-        GameObject newItem = Instantiate(item, position, Quaternion.identity);
+        bool isGoodItem = UnityEngine.Random.value > 0.5f;
+        GameObject item = isGoodItem ? goodItemGO : badItemGO;
+        float height=isGoodItem?0.5f:0.17f;
+
+        GameObject newItem = Instantiate(item, new Vector3(position.x, position.y+height,position.z), Quaternion.identity);
         
         Item newItemScript = newItem.GetComponent<Item>();
         items.Add(newItemScript);
@@ -99,6 +103,7 @@ public class ItemManager : MonoBehaviour
         float cellsize = roadHelper.cellSize;
         float offsetAmount = cellsize * 0.3f;
         float offsetX = UnityEngine.Random.value > 0.5f ? offsetAmount : -offsetAmount;
-        return new Vector3(position.x * cellsize + offsetX, position.y+spawnHeight, position.z * cellsize);
+        return new Vector3(position.x * cellsize + offsetX, position.y, position.z * cellsize);
     }
+   
 }

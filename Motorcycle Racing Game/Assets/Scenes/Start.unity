@@ -3545,8 +3545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ed9feb0146e71246a254890896f5d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
-  goodItemGO: {fileID: 2966496667348272685, guid: 11535c3acc382e44f934cdd69f8c0697, type: 3}
-  badItemGO: {fileID: 1512366089193468795, guid: 5818421d2a48ec543b8dfccd46bd723f, type: 3}
+  goodItemGO: {fileID: 94035535753489966, guid: 3dba96d93caadcc4bb70e62a67b09255, type: 3}
+  badItemGO: {fileID: 1410195973395810586, guid: 2dcbf48fcaa068c42886ac329d4ff782, type: 3}
 --- !u!4 &1212625820
 Transform:
   m_ObjectHideFlags: 0
@@ -4145,7 +4145,7 @@ MonoBehaviour:
   rules:
   - {fileID: 11400000, guid: d9f87d872e51ddf4ba65ef17abee108f, type: 2}
   rootSentence: '[F]--F'
-  iterationLimit: 2
+  iterationLimit: 3
   randomIgnoreRuleModifier: 0
   chanceToIgnoreRule: 0
 --- !u!1 &1564754923 stripped
@@ -7557,7 +7557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7565,7 +7565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9082158189887096093, guid: 2aa8869586845c248954bab1d2af56a5, type: 3}
       propertyPath: m_LocalRotation.w

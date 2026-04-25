@@ -8,6 +8,7 @@ public class MotorcycleMovement : MonoBehaviour
 {
     Rigidbody _rb;
     Vector2 _input = Vector2.zero;
+    float turnAnimationSpeed = 10f;
 
     [SerializeField] Transform steeringHandle;
     [SerializeField] Transform steeringMotorcycle;
@@ -22,8 +23,9 @@ public class MotorcycleMovement : MonoBehaviour
     [SerializeField] float resetMultiplier;
     [SerializeField] GameObject[] wheels;
 
+    float checkDistance = 2f;
+
     
-   // DialogueManager dialogueManager;
 
 
     float startHandlePosition;
@@ -36,10 +38,13 @@ public class MotorcycleMovement : MonoBehaviour
     public enum State
     {
         Dialogue,
+        Corner,
         UserControled,
     }
 
     State currentState = State.Dialogue;
+    
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -57,6 +62,10 @@ public class MotorcycleMovement : MonoBehaviour
             case State.Dialogue:
                 Cursor.lockState = CursorLockMode.None;
                 _rb.linearVelocity = Vector3.zero;
+                break;
+            case State.Corner:
+                    Cursor.lockState = CursorLockMode.Locked;
+                    _rb.linearVelocity = Vector3.zero;
                 break;
             case State.UserControled:
                 Cursor.lockState = CursorLockMode.Locked;
@@ -145,10 +154,14 @@ public class MotorcycleMovement : MonoBehaviour
     }
    public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Intersection")|| other.CompareTag("TIntersection")|| other.CompareTag("End")||other.CompareTag("Corner"))
+        if (other.CompareTag("Intersection")|| other.CompareTag("TIntersection")|| other.CompareTag("End"))
         {
             currentState = State.Dialogue;
             Debug.Log("Enter Choice Dialogue");
+        }
+        else if (other.CompareTag("Corner"))
+        {
+            currentState = State.Corner; 
         }
 
     }
@@ -164,20 +177,32 @@ public class MotorcycleMovement : MonoBehaviour
         return currentState;
     }
 
-    public IEnumerator Turn(float angle)
+   internal bool checkAhead(Vector3 dir)
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.5f;
+        return Physics.Raycast(origin, dir, checkDistance);
+    }
+    internal IEnumerator Turn(float angle)
     { 
 
         Quaternion startRot = transform.rotation;
         Quaternion targetRot = Quaternion.Euler(0, transform.eulerAngles.y + angle, 0);
-        Vector3 move=new Vector3(1f,0,3f);
-
+        
         float duration = 0.8f;
         float time = 0f;
-        transform.localPosition +=move;
         while (time < duration)
         {
             time += Time.fixedDeltaTime;
+            
             transform.rotation = Quaternion.Slerp(startRot, targetRot, time / duration);
+            Vector3 move = transform.forward*turnAnimationSpeed* Time.deltaTime;
+            if (!checkAhead(transform.forward))
+            {
+                transform.position += move;
+            }
+            else
+                yield break;
+
             yield return null;
         }
 
