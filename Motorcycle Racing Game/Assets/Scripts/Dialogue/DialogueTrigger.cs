@@ -9,6 +9,7 @@ public class DialogueTrigger : MonoBehaviour
     public Dialogue choiceMaking;
     MotorcycleMovement player;
     MotorcycleMovement.State currentState;
+    [SerializeField] GameObject timer;
 
     [SerializeField] TextMeshProUGUI hideIntersectionDialogue;
     [SerializeField] TextMeshProUGUI hideTutorial;
@@ -16,6 +17,7 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] TextMeshProUGUI hideTIntersectionRightDialogue;
     [SerializeField] TextMeshProUGUI hideEnd;
     [SerializeField] TextMeshProUGUI hideTIntersectionDialogueRightLeft;
+
     //GameObject rightButton;
 
     bool dialogueStarted = false;
@@ -35,6 +37,7 @@ public class DialogueTrigger : MonoBehaviour
     public void Start()
     {     
         player = FindFirstObjectByType<MotorcycleMovement>();
+      
         //rightButton= GameObject.Find("Right");
         hideIntersectionDialogue.gameObject.SetActive(false);
         hideTIntersectionLeftDialogue.gameObject.SetActive(false);
@@ -56,6 +59,7 @@ public class DialogueTrigger : MonoBehaviour
                     TriggerTutorial();
                     break;
                 case State.IntersectionDialogue:
+                    timer.gameObject.SetActive(true);
                     hideIntersectionDialogue.gameObject.SetActive(true);
                     hideTIntersectionLeftDialogue.gameObject.SetActive(false);
                     hideTIntersectionRightDialogue.gameObject.SetActive(false);
@@ -64,6 +68,7 @@ public class DialogueTrigger : MonoBehaviour
                     TriggerChoiceMaking();
                     break;
                 case State.TIntersectionLeft:
+                    timer.gameObject.SetActive(true);
                     hideTIntersectionLeftDialogue.gameObject.SetActive(true);
                     hideTIntersectionRightDialogue.gameObject.SetActive(false);
                     hideIntersectionDialogue.gameObject.SetActive(false);
@@ -73,6 +78,7 @@ public class DialogueTrigger : MonoBehaviour
                     Debug.Log("T intersection left");
                     break;
                 case State.TIntersectionRight:
+                    timer.gameObject.SetActive(true);
                     hideTIntersectionLeftDialogue.gameObject.SetActive(false);
                     hideTIntersectionRightDialogue.gameObject.SetActive(true);
                     hideIntersectionDialogue.gameObject.SetActive(false);
@@ -83,6 +89,7 @@ public class DialogueTrigger : MonoBehaviour
                     Debug.Log("T intersection right");
                     break;             
                 case State.EndDialogue:
+                    timer.gameObject.SetActive(true);
                     hideTIntersectionLeftDialogue.gameObject.SetActive(false);
                     hideTIntersectionRightDialogue.gameObject.SetActive(false);
                     hideIntersectionDialogue.gameObject.SetActive(false);
@@ -92,6 +99,7 @@ public class DialogueTrigger : MonoBehaviour
                     break;
 
                 case State.TIntersectionDialogueRightLeft:
+                    timer.gameObject.SetActive(true);
                     hideTIntersectionLeftDialogue.gameObject.SetActive(false);
                     hideTIntersectionRightDialogue.gameObject.SetActive(false);
                     hideIntersectionDialogue.gameObject.SetActive(false);
