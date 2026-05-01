@@ -15,8 +15,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueTIntersectionLeftText;
     [SerializeField] TextMeshProUGUI dialogueTIntersectionRightText;
     [SerializeField] Animator animator;
-    DialogueTrigger.State currentState;
+   internal DialogueTrigger.State currentState;
    [SerializeField] MotorcycleMovement player;
+    Timer timer;
+    internal float time = 20f;
     DialogueTrigger manager;
     public void Awake()
     {
@@ -67,8 +69,8 @@ public class DialogueManager : MonoBehaviour
     {
         animator.SetBool("isOpen", false);
         manager.DialogEnded();
-        Debug.Log("End of tutorial.");
         
+
     }
 
     public void turnRight()
