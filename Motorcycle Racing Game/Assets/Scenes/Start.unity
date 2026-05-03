@@ -3167,7 +3167,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!65 &1076618139
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4872,16 +4872,15 @@ MonoBehaviour:
   houseTypes:
   - prefabs:
     - {fileID: 2195294821514908094, guid: 23dd5fd9e518d264abb70731252a7e2a, type: 3}
-    - {fileID: 9097069939207354990, guid: 963aec0715cbb224a92652d99bc841eb, type: 3}
     sizeRequired: 1
     quantity: -1
     quantityAlreadyPlaced: 0
   - prefabs:
     - {fileID: 4648639624746843757, guid: dba8e43e671d90d4a88a65a26f484f21, type: 3}
-    - {fileID: 1267752594550630789, guid: c008f7d315b9ab8419aebf1e17d5e1e5, type: 3}
     sizeRequired: 1
     quantity: 10
     quantityAlreadyPlaced: 0
+  endPrefab: {fileID: 8358557771359246065, guid: 6513dfa477435364c9c004f9c032000b, type: 3}
   cellSize: 6
 --- !u!1 &1975332652
 GameObject:

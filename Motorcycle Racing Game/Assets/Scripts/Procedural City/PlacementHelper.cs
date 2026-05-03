@@ -64,6 +64,17 @@ namespace SVS
             }
             throw new System.Exception("No direction such as " + direction);
         }
+        internal static Direction GetReverseDirEndRoad(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up: return Direction.Down;
+                case Direction.Down: return Direction.Up;
+                case Direction.Left: return Direction.Right;
+                case Direction.Right: return Direction.Left;
+            }
+            throw new Exception("No direction such as " + direction);
+        }
     }
 }
 

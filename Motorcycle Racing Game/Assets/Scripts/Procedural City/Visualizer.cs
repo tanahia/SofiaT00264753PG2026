@@ -92,7 +92,8 @@ namespace SVS
                 }
             }
             roadHelper.FixRoad();
-          structureHelper.PlaceStructuresAroundRoad(roadHelper.GetRoadPositions());
+            structureHelper.PlaceStructureAtRoadEnds(roadHelper.GetRoadEndPositions(), roadHelper.GetRoadPositions());
+            structureHelper.PlaceStructuresAroundRoad(roadHelper.GetRoadPositions());
 
         }
     }

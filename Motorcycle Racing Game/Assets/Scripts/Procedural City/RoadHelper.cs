@@ -132,7 +132,19 @@ namespace SVS
 				}
 			}
 		}
-
+		public List<Vector3Int> GetRoadEndPositions()
+		{
+					List<Vector3Int> roadEndPositions = new List<Vector3Int>();
+			foreach (var position in roadDictionary.Keys)
+			{
+				List<Direction> neighbourDirections = PlacementHelper.FindNeighbour(position, roadDictionary.Keys);
+				if (neighbourDirections.Count == 1)
+				{
+					roadEndPositions.Add(position);
+				}
+			}
+			return roadEndPositions;
+		}
 	}
 }
 

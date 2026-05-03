@@ -5,6 +5,7 @@ using UnityEngine;
 public class HouseType
 {
     [SerializeField] private GameObject[] prefabs;
+    //[SerializeField] private GameObject endPrefab;
     public int sizeRequired;
     public int quantity;
     public int quantityAlreadyPlaced;
@@ -46,4 +47,12 @@ public class HouseType
     {
         quantityAlreadyPlaced = 0;
     }
+  /*  public GameObject GetEndPrefab()
+    {
+        if (endPrefab != null)
+        {
+            return endPrefab;
+        }
+        return GetPrefab();
+    }*/
 }

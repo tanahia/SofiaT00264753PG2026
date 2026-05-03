@@ -8,34 +8,55 @@ public class Timer : MonoBehaviour
     internal float time=5f;
     public TextMeshProUGUI CountDown;
     DialogueManager manager;
-
+    MotorcycleMovement player;
+    internal bool isRunning = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
        manager = FindFirstObjectByType<DialogueManager>();
+        player = FindFirstObjectByType<MotorcycleMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        time -= Time.deltaTime;
-        CountDown.text = "00:"+(int)time;
-        if (time <= 0)
+        if(player.getCurrentState() == MotorcycleMovement.State.Dialogue)
+        {
+            time -= Time.deltaTime;
+            time = Mathf.Max(time, 0f);
+            CountDown.text = "00:0" + Mathf.CeilToInt(time);
+            if (time <= 0)
             {
-                time = 0;
+
                 CountDown.text = "00:00";
-            if (manager.currentState == DialogueTrigger.State.IntersectionDialogue)
-            {
 
-                manager.turnRight();
+                if (manager.currentState == DialogueTrigger.State.TIntersectionDialogueRightLeft)
+                {
+                    Debug.Log("Time up. Turning right");
+                    manager.turnRight();
+                }
 
-
-            } else
                 manager.EndDialogue();
-           
-            time = 5f;
-            CountDown.text = "00:" + (int)time;
-            gameObject.SetActive(false);
+                Reset();
+
+
+            }
+            
         }
+        
     }
+    public void StartTimer()
+    {
+        time = 5f;
+        isRunning = true;
+        gameObject.SetActive(true);
+    }
+    internal void Reset()
+    {
+        isRunning = false;
+        time = 5f;
+       CountDown.text = "00:0" + Mathf.CeilToInt(time);
+        gameObject.SetActive(false);
+    }
+
 }

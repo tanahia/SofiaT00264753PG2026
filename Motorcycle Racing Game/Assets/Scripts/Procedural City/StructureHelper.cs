@@ -9,6 +9,7 @@ namespace SVS
 	public class StructureHelper : MonoBehaviour
 	{
 		public HouseType[] houseTypes;
+        public GameObject endPrefab;
         public float cellSize;
         public Dictionary<Vector3Int, GameObject> structuresDictionary = new Dictionary<Vector3Int, GameObject>();
 
@@ -151,7 +152,42 @@ namespace SVS
             }
             return freeSpaces;
         }                            
+        public void PlaceStructureAtRoadEnds(List<Vector3Int> roadEnds, List<Vector3Int> roadPositions)
+        {
 
+            foreach(var end in roadEnds)
+            {
+                var neighbours = PlacementHelper.FindNeighbour(end, roadPositions);
+                if (neighbours.Count != 1)
+                    continue;
+
+                var directionToRoad = neighbours[0];
+                var outwardDirection = PlacementHelper.GetReverseDirEndRoad(directionToRoad);
+                Vector3Int spawnPos = end + PlacementHelper.GetOffsetFromDirection(outwardDirection);
+              
+                if(structuresDictionary.ContainsKey(spawnPos))
+                {
+                    continue;
+                }
+                Quaternion rotation = Quaternion.identity;
+                switch (directionToRoad)
+                {
+                    case Direction.Down:
+                        rotation = Quaternion.Euler(0, 180, 0);
+                        break;
+                    case Direction.Left:
+                        rotation = Quaternion.Euler(0, -90, 0);
+                        break;
+                    case Direction.Right:
+                        rotation = Quaternion.Euler(0, 90, 0);
+                        break;
+                    default:
+                        break;
+                }
+                var structure = SpawnPrefab(endPrefab, spawnPos, rotation);
+                structuresDictionary.Add(spawnPos, structure);
+            }
+        }
 	}
 }
 
