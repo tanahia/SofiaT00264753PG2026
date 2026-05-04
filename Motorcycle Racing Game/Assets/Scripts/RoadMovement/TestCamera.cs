@@ -1,0 +1,38 @@
+using UnityEngine;
+using UnityEngine.Windows;
+
+public class TestCamera : MonoBehaviour
+{
+    float mouseX;
+    private float currentY;
+    [SerializeField] float mouseSensetivity;
+    TestMovement player;
+    TestMovement.State currentState;
+
+
+    void Start()
+    {
+        player = FindFirstObjectByType<TestMovement>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        mouseX = UnityEngine.Input.GetAxis("Mouse X");
+
+        cameraRotation();
+    }
+    public void cameraRotation()
+    {
+        currentState = player.getCurrentState();
+        if (currentState == TestMovement.State.UserControled)
+        {
+            currentY += mouseX * mouseSensetivity * Time.deltaTime;
+            currentY = Mathf.Clamp(currentY, -30f, 30f);
+            transform.localRotation = Quaternion.Euler(0, currentY, 0);
+        }
+
+
+    }
+}
+

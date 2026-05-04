@@ -10,7 +10,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] GameObject goodItemGO, badItemGO;
     List<Item> items = new List<Item>();
     private int maxItems = 15;
-    private float spawnHeight;
+    private float spawnHeight=0.3f;
     RoadHelper roadHelper;
     Vector3Int randomPos;
     
@@ -101,7 +101,7 @@ public class ItemManager : MonoBehaviour
     Vector3 GetOffsetRandomPosition(Vector3Int position)
     {
         float cellsize = roadHelper.cellSize;
-        float offsetAmount = cellsize * 0.3f;
+        float offsetAmount = cellsize * spawnHeight;
         float offsetX = UnityEngine.Random.value > 0.5f ? offsetAmount : -offsetAmount;
         return new Vector3(position.x * cellsize + offsetX, position.y, position.z * cellsize);
     }

@@ -4,21 +4,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MotorcycleMovement : MonoBehaviour
+public class TestMovement : MonoBehaviour
 {
-    internal Rigidbody _rb;
-    internal Vector2 _input = Vector2.zero;
-    internal float turnAnimationSpeed = 10f;
-    internal float checkMultilier = 0.5f;
-    internal float maxY=30f;
-    internal float maxZ=5f;
-    internal float minY = -30f;
-    internal float minZ = -5f;
+    Rigidbody _rb;
+    Vector2 _input = Vector2.zero;
+    float turnAnimationSpeed = 10f;
 
     [SerializeField] Transform steeringHandle;
     [SerializeField] Transform steeringMotorcycle;
 
-    [SerializeField] float accelaration=50f;
+    [SerializeField] float accelaration = 50f;
     [SerializeField] float brakeAccelaration;
     [SerializeField] float steeringAccelearation;
     [SerializeField] float angleMultiplier;
@@ -28,15 +23,18 @@ public class MotorcycleMovement : MonoBehaviour
     [SerializeField] float resetMultiplier;
     [SerializeField] GameObject[] wheels;
 
-    internal float checkDistance = 2f;
-    internal float duration = 0.8f;
-    internal float time = 0f;
+    float checkDistance = 2f;
 
-    internal float startHandlePosition;
-    internal float currentY;
-    internal float currentZ;
-    internal float currentX;
-  
+
+
+
+    float startHandlePosition;
+    float currentY;
+    float currentZ;
+    float currentX;
+
+
+
     public enum State
     {
         Dialogue,
@@ -44,17 +42,21 @@ public class MotorcycleMovement : MonoBehaviour
         UserControled,
     }
 
-    State currentState = State.Dialogue;
+    State currentState = State.UserControled;
+
+
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();      
+        _rb = GetComponent<Rigidbody>();
+
         startHandlePosition = steeringHandle.localEulerAngles.x;
-       
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+
         switch (currentState)
         {
             case State.Dialogue:
@@ -62,8 +64,8 @@ public class MotorcycleMovement : MonoBehaviour
                 _rb.linearVelocity = Vector3.zero;
                 break;
             case State.Corner:
-                    Cursor.lockState = CursorLockMode.Locked;
-                    _rb.linearVelocity = Vector3.zero;
+                Cursor.lockState = CursorLockMode.Locked;
+                _rb.linearVelocity = Vector3.zero;
                 break;
             case State.UserControled:
                 Cursor.lockState = CursorLockMode.Locked;
@@ -81,16 +83,17 @@ public class MotorcycleMovement : MonoBehaviour
                 }
                 else
                 {
-                        if (_rb.linearVelocity.magnitude <= currentSpeedLimit)
-                            Accelarate(currentAcceleration);
-                        else
-                            _rb.linearVelocity = _rb.linearVelocity.normalized * currentSpeedLimit;
-                        Steer();                                     
+                    if (_rb.linearVelocity.magnitude <= currentSpeedLimit)
+                        Accelarate(currentAcceleration);
+                    else
+                        _rb.linearVelocity = _rb.linearVelocity.normalized * currentSpeedLimit;
+                    Steer();
+
                 }
                 break;
         }
 
-        
+
     }
 
     private void Brake()
@@ -108,23 +111,24 @@ public class MotorcycleMovement : MonoBehaviour
 
         _rb.AddForce(_rb.transform.right * _input.x * steeringAccelearation);
 
-        currentY += _input.x*angleMultiplier* Time.fixedDeltaTime;
-        currentZ+= -_input.x*angleMultiplier* Time.fixedDeltaTime;
-        currentY = Mathf.Clamp(currentY, minY, maxY);
-        currentZ = Mathf.Clamp(currentZ, minZ, maxZ);
+        currentY += _input.x * angleMultiplier * Time.fixedDeltaTime;
+        currentZ += -_input.x * angleMultiplier * Time.fixedDeltaTime;
+        currentY = Mathf.Clamp(currentY, -30f, 30f);
+        currentZ = Mathf.Clamp(currentZ, -5f, 5f);
 
         if (_input.x == 0)
         {
             ResetRotation();
-           
+
         }
-        else {
+        else
+        {
             steeringMotorcycle.localRotation = Quaternion.Euler(0, 0, currentZ);
             steeringHandle.localRotation = Quaternion.Euler(startHandlePosition, currentY, 0);
 
-          //  print(_input.x);
+            //  print(_input.x);
         }
-       
+
     }
 
     void Accelarate(float accelaration)
@@ -149,16 +153,16 @@ public class MotorcycleMovement : MonoBehaviour
         currentY = Mathf.Lerp(currentY, 0f, resetMultiplier * Time.fixedDeltaTime);
         currentZ = Mathf.Lerp(currentZ, 0f, resetMultiplier * Time.fixedDeltaTime);
     }
-   public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Intersection")|| other.CompareTag("TIntersection")|| other.CompareTag("End"))
+        if (other.CompareTag("Intersection") || other.CompareTag("TIntersection") || other.CompareTag("End"))
         {
             currentState = State.Dialogue;
             Debug.Log("Enter Choice Dialogue");
         }
         else if (other.CompareTag("Corner"))
         {
-            currentState = State.Corner; 
+            currentState = State.Corner;
         }
 
     }
@@ -166,7 +170,7 @@ public class MotorcycleMovement : MonoBehaviour
 
     public void GoToState(State newState)
     {
-        currentState= newState;
+        currentState = newState;
 
     }
     public State getCurrentState()
@@ -174,31 +178,31 @@ public class MotorcycleMovement : MonoBehaviour
         return currentState;
     }
 
-   internal bool checkAhead(Vector3 dir)
+    internal bool checkAhead(Vector3 dir)
     {
-        Vector3 origin = transform.position + Vector3.up * checkMultilier;
+        Vector3 origin = transform.position + Vector3.up * 0.5f;
         return Physics.Raycast(origin, dir, checkDistance);
     }
     internal IEnumerator Turn(float angle)
     {
-        Debug.Log("Turn");
+
         Quaternion startRot = transform.rotation;
         Quaternion targetRot = Quaternion.Euler(0, transform.eulerAngles.y + angle, 0);
-        
 
+        float duration = 0.8f;
+        float time = 0f;
         while (time < duration)
         {
             time += Time.fixedDeltaTime;
-            
+
             transform.rotation = Quaternion.Slerp(startRot, targetRot, time / duration);
-            Vector3 move = transform.forward*turnAnimationSpeed* Time.deltaTime;
+            Vector3 move = transform.forward * turnAnimationSpeed * Time.deltaTime;
             if (!checkAhead(transform.forward))
             {
                 transform.position += move;
             }
             else
                 yield break;
-              
 
             yield return null;
         }
@@ -206,6 +210,6 @@ public class MotorcycleMovement : MonoBehaviour
         transform.rotation = targetRot;
 
         currentState = State.UserControled;
-        
+       // Debug.Log("Turn");
     }
 }

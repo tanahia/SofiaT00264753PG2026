@@ -120,9 +120,7 @@ namespace SVS
 
         private GameObject SpawnPrefab(GameObject prefab, Vector3Int position, Quaternion rotation)
         {
-            //  var newStructure = Instantiate(prefab, position, rotation,transform);
-            // return newStructure;
-            Vector3 worldPosition = new Vector3(
+         Vector3 worldPosition = new Vector3(
          position.x * cellSize,
          position.y,
          position.z * cellSize

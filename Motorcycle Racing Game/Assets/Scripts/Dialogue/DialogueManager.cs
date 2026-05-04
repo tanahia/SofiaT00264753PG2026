@@ -14,17 +14,16 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueIntersectionText;
     [SerializeField] TextMeshProUGUI dialogueTIntersectionLeftText;
     [SerializeField] TextMeshProUGUI dialogueTIntersectionRightText;
+    [SerializeField] TextMeshProUGUI dialogueTIntersectionLeftRightText;
     [SerializeField] Animator animator;
    internal DialogueTrigger.State currentState;
    [SerializeField] MotorcycleMovement player;
-    Timer timer;
+ 
     internal float time = 20f;
     DialogueTrigger manager;
     public void Awake()
     {
         manager = FindFirstObjectByType<DialogueTrigger>();
-     //   player = FindFirstObjectByType<MotorcycleMovement>();
-
         sentences = new Queue<string>();
        
     }
@@ -62,6 +61,8 @@ public class DialogueManager : MonoBehaviour
             dialogueTIntersectionLeftText.text = sentence;
         else if (currentState == DialogueTrigger.State.TIntersectionRight)
             dialogueTIntersectionRightText.text = sentence;
+        else if (currentState == DialogueTrigger.State.TIntersectionDialogueRightLeft)
+            dialogueTIntersectionLeftRightText.text = sentence;
 
     }
 

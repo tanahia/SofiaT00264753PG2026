@@ -18,7 +18,6 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] TextMeshProUGUI hideEnd;
     [SerializeField] TextMeshProUGUI hideTIntersectionDialogueRightLeft;
 
-    //GameObject rightButton;
 
     bool dialogueStarted = false;
     DialogueManager dialogueManager;
@@ -37,8 +36,7 @@ public class DialogueTrigger : MonoBehaviour
     public void Start()
     {     
         player = FindFirstObjectByType<MotorcycleMovement>();
-      
-        //rightButton= GameObject.Find("Right");
+
         hideIntersectionDialogue.gameObject.SetActive(false);
         hideTIntersectionLeftDialogue.gameObject.SetActive(false);
         hideTIntersectionRightDialogue.gameObject.SetActive(false);

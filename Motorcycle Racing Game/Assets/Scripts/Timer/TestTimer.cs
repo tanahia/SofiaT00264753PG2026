@@ -1,27 +1,21 @@
-using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class TestTimer : MonoBehaviour
 {
-    internal float time=5f;
+    internal float time = 5f;
     public TextMeshProUGUI CountDown;
-    DialogueManager manager;
-    MotorcycleMovement player;
     internal bool isRunning = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       manager = FindFirstObjectByType<DialogueManager>();
-        player = FindFirstObjectByType<MotorcycleMovement>();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(player.getCurrentState() == MotorcycleMovement.State.Dialogue)
-        {
+     
             time -= Time.deltaTime;
             time = Mathf.Max(time, 0f);
             CountDown.text = "00:0" + Mathf.CeilToInt(time);
@@ -29,25 +23,13 @@ public class Timer : MonoBehaviour
             {
 
                 CountDown.text = "00:00";
-
-                if (manager.currentState == DialogueTrigger.State.TIntersectionDialogueRightLeft)
-                {
-                    Debug.Log("Time up. Turning right");
-                    manager.turnRight();
-                }
-
-                manager.EndDialogue();
                 Reset();
-
-
-            }
-            
         }
-        
+
     }
     public void StartTimer()
     {
-        float timeAfter = time;
+       
         isRunning = true;
         gameObject.SetActive(true);
     }
