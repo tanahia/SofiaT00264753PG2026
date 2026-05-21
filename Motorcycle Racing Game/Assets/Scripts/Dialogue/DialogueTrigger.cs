@@ -51,7 +51,6 @@ public class DialogueTrigger : MonoBehaviour
             dialogueStarted = true;
             switch (currentDialogueState)
             {
-
                 case State.Tutorial:
                     hideTutorial.gameObject.SetActive(true);
                     TriggerTutorial();
